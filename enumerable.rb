@@ -69,6 +69,18 @@ module Enumerable
     counter
   end
 
+  def my_map(proc = nil)
+    return to_enum(:my_map)  unless block_given? || !proc.nil?
+    array = []
+    if proc.nil?
+      to_a.my_each {|items| array << yield(items)}
+    else 
+      to_a.my_each {|items| array << proc.call(items)}
+    end
+    array
+  end
+
+
 end
 
 
@@ -147,20 +159,20 @@ search = proc { |memo, word| memo.length > word.length ? memo : word }
 
 # # 7 *** my_count? test
 
-ary = [1, 2, 4, 2]
-puts ary.my_count               #=> 4
-puts ary.my_count(2)            #=> 2
-puts ary.my_count{ |x| x%2==0 } #=> 3
-puts range.my_count             #=> 46
+# ary = [1, 2, 4, 2]
+# puts ary.my_count               #=> 4
+# puts ary.my_count(2)            #=> 2
+# puts ary.my_count{ |x| x%2==0 } #=> 3
+# puts range.my_count             #=> 46
 
 # # 8 *** my_map test
 
-# print (1..4).my_map { |i| i * i } #=> [1, 4, 9, 16]
-# random_proc = proc { |num| num * 2 }
-# print (1..4).my_map(random_proc) #=> [2, 4, 6, 8]
-# puts a.my_map.is_a?(Enumerator) #=> true 
-# my_proc = proc { |num| num > 10 }
-# print a.my_map(my_proc) { |num| num < 10 }
+print (1..4).my_map { |i| i * i } #=> [1, 4, 9, 16]
+random_proc = proc { |num| num * 2 }
+print (1..4).my_map(random_proc) #=> [2, 4, 6, 8]
+puts a.my_map.is_a?(Enumerator) #=> true 
+my_proc = proc { |num| num > 10 }
+print a.my_map(my_proc) { |num| num < 10 }
 
 # # 9 *** my_inject test
 
