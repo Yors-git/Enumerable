@@ -57,6 +57,18 @@ module Enumerable
     !my_any?(arg, &block)
   end
 
+  def my_count(parameter = nil)
+    counter = 0
+    if block_given?
+      my_each{ |items| counter += 1 if yield(items)}
+    elsif parameter
+      my_each{ |items| counter += 1 if items == parameter}
+    else 
+      counter = size
+    end
+    counter
+  end
+
 end
 
 
@@ -135,11 +147,11 @@ search = proc { |memo, word| memo.length > word.length ? memo : word }
 
 # # 7 *** my_count? test
 
-# ary = [1, 2, 4, 2]
-# puts ary.my_count               #=> 4
-# puts ary.my_count(2)            #=> 2
-# puts ary.my_count{ |x| x%2==0 } #=> 3
-# puts range.my_count             #=> 46
+ary = [1, 2, 4, 2]
+puts ary.my_count               #=> 4
+puts ary.my_count(2)            #=> 2
+puts ary.my_count{ |x| x%2==0 } #=> 3
+puts range.my_count             #=> 46
 
 # # 8 *** my_map test
 
