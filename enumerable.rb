@@ -53,6 +53,10 @@ module Enumerable
     false
   end
 
+  def my_none?(arg = nil, &block)
+    !my_any?(arg, &block)
+  end
+
 end
 
 
@@ -105,14 +109,14 @@ search = proc { |memo, word| memo.length > word.length ? memo : word }
 
 # 5 *** my_any? test
 
-puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
-puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
-puts %w[ant bear cat].my_any?(/d/)                        #=> false
-puts [nil, true, 99].my_any?(Integer)                     #=> true
-puts [nil, true, 99].my_any?                              #=> true
-puts [].my_any?                                           #=> false
-puts words.my_any?('cat')                                 #=> false
-puts [  nil, false].my_any?                               #=> false
+# puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
+# puts %w[ant bear cat].my_any?(/d/)                        #=> false
+# puts [nil, true, 99].my_any?(Integer)                     #=> true
+# puts [nil, true, 99].my_any?                              #=> true
+# puts [].my_any?                                           #=> false
+# puts words.my_any?('cat')                                 #=> false
+# puts [  nil, false].my_any?                               #=> false
 
 
 # # 6 *** my_none? test
