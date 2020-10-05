@@ -13,6 +13,12 @@ module Enumerable
       index += 1
     end
   end
+  def my_select
+    return to_enum(:my_select) if !block_given?
+    new_arr = []
+    to_a.my_each {|item| new_arr <<item if yield item}
+    new_arr
+  end
 end
 
 
@@ -38,19 +44,19 @@ search = proc { |memo, word| memo.length > word.length ? memo : word }
 
 # 2 ***my_each_with_index
 
-["any","k","a","b","c","d","e"].my_each_with_index { |item,index|
-  puts "#{item} : #{index}"}
-a.my_each_with_index {|item,index| puts "#{item} & #{index}"}
-puts a.my_each_with_index.is_a?(Enumerator)
-block = proc { |num| num < 4 }
-print a.my_each_with_index(&block)
+# ["any","k","a","b","c","d","e"].my_each_with_index { |item,index|
+#   puts "#{item} : #{index}"}
+# a.my_each_with_index {|item,index| puts "#{item} & #{index}"}
+# puts a.my_each_with_index.is_a?(Enumerator)
+# block = proc { |num| num < 4 }
+# print a.my_each_with_index(&block)
 
-puts range.my_each_with_index(&block) == range.each_with_index(&block)  #true
+# puts range.my_each_with_index(&block) == range.each_with_index(&block)  #true
 
 # 3 *** my_select test
 
-# print a.my_select { |num| num.even?}
-# print a.my_select.is_a?(Enumerator)
+print a.my_select { |num| num.even?}
+print a.my_select.is_a?(Enumerator)
 
 # # 4 *** my_all? test
 
