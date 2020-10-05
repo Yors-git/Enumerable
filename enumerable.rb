@@ -5,6 +5,7 @@ module Enumerable
       yield i
     end
   end
+
   def my_each_with_index
     index = 0
     for i in self 
@@ -20,8 +21,6 @@ module Enumerable
     new_arr
   end
 
-  #my_all
-
   def my_all?(parameter = nil)
     if block_given?
       to_a.my_each { |items| return false if yield(items) == false }
@@ -34,11 +33,25 @@ module Enumerable
       to_a.my_each { |item| return false unless parameter.match(item) }
     else
       to_a.my_each { |item| return false if item != parameter}
-
     end
     true
   end
 
+  def my_any?(parameter = nil)
+    if block_given?
+      to_a.my_each { |items| return true if yield(items) }
+      return false
+    elsif parameter.nil?
+      to_a.my_each { |items| return true if items}
+    elsif !parameter.nil? && (parameter.is_a? Class)
+      to_a.my_each { |items| return true if [items.class].include?(parameter)}
+    elsif !parameter.nil? && parameter.class == Regexp
+      to_a.my_each { |items| return true if parameter.match(items)}
+    else
+      to_a.my_each { |items| return true if items == parameter}
+    end
+    false
+  end
 
 end
 
@@ -81,25 +94,25 @@ search = proc { |memo, word| memo.length > word.length ? memo : word }
 
 # 4 *** my_all? test
 
-puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=>true
-puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=>false
-puts %w[ant bear cat].my_all?(/t/) #=>false
-puts [1, 2i, 3.14].my_all?(Numeric) #=>true
-puts [nil, true, 99].my_all? #=>false
-puts [].my_all? #=>true
-puts a.my_all?(3) #=>false
-puts [1, "hi", true, []].my_all? #=>true 
+# puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=>true
+# puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=>false
+# puts %w[ant bear cat].my_all?(/t/) #=>false
+# puts [1, 2i, 3.14].my_all?(Numeric) #=>true
+# puts [nil, true, 99].my_all? #=>false
+# puts [].my_all? #=>true
+# puts a.my_all?(3) #=>false
+# puts [1, "hi", true, []].my_all? #=>true 
 
 # 5 *** my_any? test
 
-# puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
-# puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
-# puts %w[ant bear cat].my_any?(/d/)                        #=> false
-# puts [nil, true, 99].my_any?(Integer)                     #=> true
-# puts [nil, true, 99].my_any?                              #=> true
-# puts [].my_any?                                           #=> false
-# puts words.my_any?('cat')                                 #=> false
-# puts [  nil, false].my_any?                               #=> false
+puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
+puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
+puts %w[ant bear cat].my_any?(/d/)                        #=> false
+puts [nil, true, 99].my_any?(Integer)                     #=> true
+puts [nil, true, 99].my_any?                              #=> true
+puts [].my_any?                                           #=> false
+puts words.my_any?('cat')                                 #=> false
+puts [  nil, false].my_any?                               #=> false
 
 
 # # 6 *** my_none? test
