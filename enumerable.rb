@@ -22,29 +22,21 @@ module Enumerable
 
   #my_all
 
-  # def my_all?(a = nil)
-  #   if block_given?
-  #     to_a.my_each {|items| return false if yield(items) == false}
-  #     return true
-  #   elsif a.nil?
-  #     to_a.my_each {|items| return false if items == false || items.nil?}
-  #   elsif !a = nil && (a.is_a? == Class )
-  #     to_a.my_each {|items| return false unless [items.class, items.class.superclass].include?(a)}
-  #   elsif !a = nil && a.class == Regexp
-  #     to_a.my_each {|items| return false unless a.match(items)}
-  #   else
-  #     to_a.my_each {|items| return false if items != a}
-
-  #   end
-  #   true
-  # end
-
-  def my_all?
-    return to_enum(:my_all) if !block_given?
-    arr = my_select{|item| yield item}
-    length == arr.length
+  def my_all?(parameter = nil)
+    if block_given?
+      to_a.my_each {|items| return false if yield(items) == false}
+      return true
+    elsif a.nil?
+      to_a.my_each {|items| return false if items == false || items.nil?}
+    elsif !a.nil? && (a.is_a? == Class )
+      to_a.my_each {|items| return false unless [items.class, items.class.superclass].include?(a)}
+    elsif !a.nil? && a.class == Regexp
+      to_a.my_each {|items| return false unless a.match(items)}
+    else
+      to_a.my_each {|items| return false if items != a}
+    end
+    true
   end
-
 
 end
 
@@ -95,6 +87,7 @@ puts [nil, true, 99].my_all? #=>false
 puts [].my_all? #=>true
 puts a.my_all?(3) #=>false
 puts [1, "hi", true, []].my_all? #=>true 
+
 # 5 *** my_any? test
 
 # puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
