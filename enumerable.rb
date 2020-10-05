@@ -24,19 +24,21 @@ module Enumerable
 
   def my_all?(parameter = nil)
     if block_given?
-      to_a.my_each {|items| return false if yield(items) == false}
+      to_a.my_each { |items| return false if yield(items) == false }
       return true
-    elsif a.nil?
-      to_a.my_each {|items| return false if items == false || items.nil?}
-    elsif !a.nil? && (a.is_a? == Class )
-      to_a.my_each {|items| return false unless [items.class, items.class.superclass].include?(a)}
-    elsif !a.nil? && a.class == Regexp
-      to_a.my_each {|items| return false unless a.match(items)}
+    elsif parameter.nil?
+      to_a.my_each { |items| return false if items == false || items.nil?}
+    elsif !parameter.nil? && (parameter.is_a? Class)
+      to_a.my_each { |item| return false unless [item.class, item.class.superclass].include?(parameter)}
+    elsif !parameter.nil? && parameter.class == Regexp
+      to_a.my_each { |item| return false unless parameter.match(item) }
     else
-      to_a.my_each {|items| return false if items != a}
+      to_a.my_each { |item| return false if item != parameter}
+
     end
     true
   end
+
 
 end
 
