@@ -1,4 +1,4 @@
-# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Style/IdenticalConditionalBranches
+# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Style/IdenticalConditionalBranches, Metrics/MethodLength
 module Enumerable
   def my_each
     each do |i|
@@ -87,10 +87,7 @@ module Enumerable
   end
 
   def my_inject(*args)
-    if args.empty? && !block_given?
-      raise TypeError, "Please provide an argument"
-
-    elsif args.size == 2
+    if args.size == 2
       raise TypeError, "#{args[1]} is not a symbol" unless args[1].is_a?(Symbol)
 
       my_each { |item| args[0] = args[0].send(args[1], item) }
@@ -101,6 +98,8 @@ module Enumerable
       memo = first
       drop(1).my_each { |item| memo = memo.send(args[0], item) }
       memo
+    elsif args.empty? && !block_given?
+      raise TypeError, 'Please provide an argument'
     else
       memo = args[0] || first
       if memo == args[0]
@@ -117,4 +116,4 @@ end
 def multiply_els(arr)
   arr.my_inject(:*)
 end
-# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Style/IdenticalConditionalBranches
+# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Style/IdenticalConditionalBranches, Metrics/MethodLength
