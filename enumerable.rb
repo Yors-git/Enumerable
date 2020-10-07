@@ -99,7 +99,7 @@ module Enumerable
       drop(1).my_each { |item| memo = memo.send(args[0], item) }
       memo
     elsif args.empty? && !block_given?
-      raise TypeError, 'Please provide an argument'
+      raise LocalJumpError, 'no block given'
     else
       memo = args[0] || first
       if memo == args[0]
