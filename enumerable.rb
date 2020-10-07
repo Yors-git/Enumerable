@@ -87,7 +87,10 @@ module Enumerable
   end
 
   def my_inject(*args)
-    if args.size == 2
+    if args.empty? && !block_given?
+      raise TypeError, "Please provide an argument"
+
+    elsif args.size == 2
       raise TypeError, "#{args[1]} is not a symbol" unless args[1].is_a?(Symbol)
 
       my_each { |item| args[0] = args[0].send(args[1], item) }
