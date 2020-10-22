@@ -1,4 +1,3 @@
-# rubocop: disable Layout/LineLength
 require '../enumerable.rb'
 
 describe Enumerable do
@@ -25,7 +24,8 @@ describe Enumerable do
 
   describe '#my_each_with_index' do
     it 'returns each item with its index' do
-      expect(words.my_each_with_index { |item, index| puts "#{item} : #{index}" }).to eql(words.each_with_index { |item, index| puts "#{item} : #{index}" })
+      expect(words.my_each_with_index { |item, index| puts "#{item} : #{index}" })
+        .to eql(words.each_with_index { |item, index| puts "#{item} : #{index}" })
     end
 
     it 'checks if method is part of the module' do
@@ -103,4 +103,3 @@ describe Enumerable do
     end
   end
 end
-# rubocop: enable Layout/LineLength
