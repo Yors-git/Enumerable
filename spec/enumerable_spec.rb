@@ -19,7 +19,7 @@ describe Enumerable do
     end
 
     it 'checks if method is part of the module' do
-      expect((arr.my_each).is_a?(Enumerable)).to be(true)
+      expect(arr.my_each.is_a?(Enumerable)).to be(true)
     end
   end
 
@@ -39,7 +39,7 @@ describe Enumerable do
     end
 
     it 'checks if method is part of the module' do
-      expect((arr.my_select).is_a?(Enumerable)).to be(true)
+      expect(arr.my_select.is_a?(Enumerable)).to be(true)
     end
   end
 
