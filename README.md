@@ -44,7 +44,7 @@ Here we have, Ruby implementation of different methods to duplicate the function
 
 - Github: [@Yors-git ](https://github.com/Yors-git)
 - Twitter: [@Yors_82](https://twitter.com/Yors_82)
-- LinkedIn: [Jorge Torres](https://www.linkedin.com/in/jorge-torres-8b87571a8/)
+- Linkedin: [Jorge Torres](https://www.linkedin.com/in/jtbribiesca/)
 
 ## 🤝 Contributing
 
